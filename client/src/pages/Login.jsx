@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { handleError } from '../utils';
 import { handleSuccess } from '../utils';
+import logo from '../assets/logo.png';
 import 'react-toastify/dist/ReactToastify.css';
 import './Login.css';
 
@@ -14,53 +15,42 @@ function Login({ setIsAuthenticated }) {
 
     const navigate = useNavigate();
 
-    const handleChange = (e)=> {
-        const {name, value} = e.target;
-        console.log(name, value);
-        const copyLoginInfo = {...loginInfo};
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        const copyLoginInfo = { ...loginInfo };
         copyLoginInfo[name] = value;
         setLoginInfo(copyLoginInfo);
     }
 
     const handleLogin = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const { email, password } = loginInfo;
-        if(!email || !password) {
-            return handleError('Both fields are mandatory.')
+        if (!email || !password) {
+            return handleError('All fields are mandatory.');
         }
         try {
-            const url = "http://localhost:8080/auth/login"
+            const url = "http://localhost:8080/auth/login";
             const response = await fetch(url, {
                 method: "POST",
-                headers:{
+                headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify(loginInfo)
             });
             const result = await response.json();
-            console.log('Login response:', result);
             const { success, message, jwtToken, name, error } = result;
-            if(success){
-                console.log('Login successful, storing token...');
+            if (success) {
                 handleSuccess(message);
-                
-                // Store the token without Bearer prefix
                 localStorage.setItem('token', jwtToken);
                 localStorage.setItem('loggedInUser', name);
-                
-                // Set authentication state
                 setIsAuthenticated(true);
-                
-                // Notify token change
                 window.dispatchEvent(new Event('tokenChanged'));
-                
-                // Use navigate for redirection
                 navigate('/home', { replace: true });
-            } else if(error){
+            } else if (error) {
                 const details = error?.details[0].message;
                 handleError(details);
-            } else if(!success) {
+            } else if (!success) {
                 handleError(message);
             }
         } catch (err) {
@@ -69,38 +59,99 @@ function Login({ setIsAuthenticated }) {
         }
     }
 
+    useEffect(() => {
+        const switchers = [...document.querySelectorAll('.switcher')];
+        
+        switchers.forEach(item => {
+            item.addEventListener('click', function() {
+                switchers.forEach(item => item.parentElement.classList.remove('is-active'));
+                this.parentElement.classList.add('is-active');
+            });
+        });
+
+        return () => {
+            switchers.forEach(item => {
+                item.removeEventListener('click', function() {
+                    switchers.forEach(item => item.parentElement.classList.remove('is-active'));
+                    this.parentElement.classList.add('is-active');
+                });
+            });
+        };
+    }, []);
+
     return (
-        <div className='container'>
-            <h1>Login</h1>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input 
-                        onChange={handleChange}
-                        type="email" 
-                        name="email" 
-                        placeholder='Enter your email...'
-                        value={loginInfo.email}
-                    />
+        <section className="forms-section">
+            <div className="branding">
+                <img src={logo} alt="Event Sage Logo" className="logo" />
+                <h1 className="brand-title">Event Sage</h1>
+                <p className="brand-tagline">Predict Your Event's Success</p>
+            </div>
+            <div className="forms">
+                <div className="form-wrapper is-active">
+                    <button type="button" className="switcher switcher-login">
+                        Login
+                        <span className="underline"></span>
+                    </button>
+                    <form className="form form-login" onSubmit={handleLogin}>
+                        <fieldset>
+                            <legend>Please, enter your email and password for login.</legend>
+                            <div className="input-block">
+                                <label htmlFor="login-email">E-mail</label>
+                                <input 
+                                    id="login-email" 
+                                    type="email" 
+                                    name="email"
+                                    value={loginInfo.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="input-block">
+                                <label htmlFor="login-password">Password</label>
+                                <input 
+                                    id="login-password" 
+                                    type="password" 
+                                    name="password"
+                                    value={loginInfo.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </fieldset>
+                        <button type="submit" className="btn-login">Login</button>
+                    </form>
                 </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input 
-                        onChange={handleChange}
-                        type="password" 
-                        name="password" 
-                        placeholder='Enter your password...'
-                        value={loginInfo.password}
-                    />
+                <div className="form-wrapper">
+                    <button type="button" className="switcher switcher-signup">
+                        Sign Up
+                        <span className="underline"></span>
+                    </button>
+                    <form className="form form-signup" onSubmit={(e) => {
+                        e.preventDefault();
+                        navigate('/signup');
+                    }}>
+                        <fieldset>
+                            <legend>Please, enter your email, password and password confirmation for sign up.</legend>
+                            <div className="input-block">
+                                <label htmlFor="signup-username">Username</label>
+                                <input id="signup-username" type="text" required />
+                            </div>
+                            <div className="input-block">
+                                <label htmlFor="signup-email">E-mail</label>
+                                <input id="signup-email" type="email" required />
+                            </div>
+                            <div className="input-block">
+                                <label htmlFor="signup-password">Password</label>
+                                <input id="signup-password" type="password" required />
+                            </div>
+                        </fieldset>
+                        <button type="submit" className="btn-signup">Sign Up</button>
+                    </form>
                 </div>
-                <button type='submit'>Login</button>
-                <span>Don't have an account?
-                    <Link to="/signup"> Sign-Up!</Link>
-                </span>
-            </form>
+            </div>
             <ToastContainer />
-        </div>
-    )
+        </section>
+    );
 }
 
-export default Login
+export default Login;
