@@ -1,0 +1,87 @@
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-button {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 1rem;
+    border: 1px solid #3a3a3a;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-button:hover:not(:disabled) {
+    background-color: #333333;
+    border-color: #4ec9ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(78, 201, 255, 0.15);
+}
+
+.pagination-button.active {
+    background-color: #4ec9ff;
+    border-color: #4ec9ff;
+    color: #1a1a1a;
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(78, 201, 255, 0.2);
+}
+
+.pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #232323;
+    border-color: #2c2c2c;
+    box-shadow: none;
+}
+
+.pagination-button.prev-button,
+.pagination-button.next-button {
+    background-color: #2c2c2c;
+    border-color: #3a3a3a;
+    font-size: 0.85rem;
+    padding: 0 1.2rem;
+}
+
+.pagination-button.prev-button:hover:not(:disabled),
+.pagination-button.next-button:hover:not(:disabled) {
+    background-color: #333333;
+    border-color: #4ec9ff;
+    box-shadow: 0 4px 8px rgba(78, 201, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+    .pagination-controls {
+        gap: 0.5rem;
+        padding: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .pagination-button {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .pagination-button.prev-button,
+    .pagination-button.next-button {
+        padding: 0 1rem;
+    }
+} 

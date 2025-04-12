@@ -1,0 +1,7 @@
+Flask
+flask-cors
+requests
+python-dotenv
+vaderSentiment
+tweepy
+pytrends

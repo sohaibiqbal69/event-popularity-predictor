@@ -1,0 +1,261 @@
+.event-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #ffffff;
+}
+
+.back-button {
+  background: transparent;
+  border: 2px solid #4ec9ff;
+  color: #4ec9ff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.back-button:hover {
+  background: #4ec9ff;
+  color: #1a1a1a;
+}
+
+.event-header {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.event-image {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.event-title h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 1rem;
+}
+
+.event-datetime,
+.event-time,
+.event-location {
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.event-datetime {
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.event-time {
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.event-location {
+  color: #4ec9ff;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.event-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.buy-tickets-button,
+.popularity-button {
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+}
+
+.buy-tickets-button {
+  background: #4ec9ff;
+  color: #1a1a1a;
+}
+
+.buy-tickets-button:hover {
+  background: #3ab7ef;
+  transform: translateY(-2px);
+}
+
+.popularity-button {
+  background: #28a745;
+  color: #ffffff;
+}
+
+.popularity-button:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+.buy-tickets-button i,
+.popularity-button i {
+  font-size: 1.2rem;
+}
+
+.event-content {
+  display: grid;
+  gap: 2rem;
+}
+
+.event-description,
+.price-info,
+.additional-info {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.event-description h2,
+.price-info h2,
+.additional-info h2 {
+  color: #4ec9ff;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-ranges {
+  display: grid;
+  gap: 1rem;
+}
+
+.price-range {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.price-range:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(5px);
+}
+
+.price-type {
+  color: #b3b3b3;
+  font-size: 1rem;
+}
+
+.price-value {
+  color: #4ec9ff;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+}
+
+.loader {
+  border: 4px solid rgba(78, 201, 255, 0.1);
+  border-left-color: #4ec9ff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-message {
+  color: #ff4e4e;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .event-header {
+    grid-template-columns: 1fr;
+  }
+
+  .event-image {
+    height: 200px;
+  }
+
+  .event-title h1 {
+    font-size: 2rem;
+  }
+
+  .event-meta {
+    gap: 0.5rem;
+  }
+
+  .event-details-container {
+    padding: 1rem;
+  }
+
+  .event-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .buy-tickets-button,
+  .popularity-button {
+    width: 100%;
+    justify-content: center;
+  }
+} 

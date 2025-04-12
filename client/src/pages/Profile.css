@@ -1,0 +1,249 @@
+.profile-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.profile-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.8rem;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.edit-button, .password-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-button {
+  background-color: #4ec9ff;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #3bb8ee;
+}
+
+.password-button {
+  background-color: #4a4a4a;
+  color: white;
+}
+
+.password-button:hover {
+  background-color: #5a5a5a;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.profile-image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-image-container {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #2c2c2c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2c2c2c;
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.image-upload {
+  margin-top: 1rem;
+}
+
+.upload-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #4ec9ff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.upload-button:hover {
+  background-color: #3bb8ee;
+}
+
+.profile-form, .password-form {
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #333;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #2c2c2c;
+  color: #ffffff;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4ec9ff;
+  box-shadow: 0 0 0 2px rgba(78, 201, 255, 0.2);
+}
+
+.error-message {
+  color: #ff4e4e;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 78, 78, 0.1);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.save-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #4ec9ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: #3bb8ee;
+}
+
+.profile-info {
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.info-group {
+  margin-bottom: 1.5rem;
+}
+
+.info-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.info-group p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.1rem;
+  padding: 0.75rem;
+  background-color: #2c2c2c;
+  border-radius: 6px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #2c2c2c;
+  border-top: 4px solid #4ec9ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .profile-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-image-section {
+    flex: 0 0 auto;
+  }
+
+  .profile-image-container {
+    width: 150px;
+    height: 150px;
+  }
+
+  .profile-form {
+    width: 100%;
+  }
+} 

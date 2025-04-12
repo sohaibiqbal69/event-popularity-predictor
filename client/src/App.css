@@ -1,0 +1,26 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+  background: #121212;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 24px;
+  min-height: 100vh;
+  background: #121212;
+  transition: margin-left 0.3s ease;
+}
+
+.main-content.no-sidebar {
+  margin-left: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 16px;
+  }
+}
