@@ -42,19 +42,19 @@ body {
 
 .branding {
 	text-align: center;
-	margin-bottom: 3rem;
+	margin-bottom: 2rem;
 	animation: fadeInDown 0.8s ease-out;
 }
 
 .logo {
-	width: 120px;
-	height: 120px;
-	margin-bottom: 0.5rem;
+	width: 100px;
+	height: 100px;
+	margin-bottom: 0.4rem;
 	filter: drop-shadow(0 0 10px rgba(78, 201, 255, 0.3));
 }
 
 .brand-title {
-	font-size: 3.5rem;
+	font-size: 3rem;
 	color: #fff;
 	margin: 0;
 	font-weight: 700;
@@ -63,14 +63,14 @@ body {
 	-webkit-text-fill-color: transparent;
 	text-shadow: 0 0 20px rgba(78, 201, 255, 0.3);
 	letter-spacing: 2px;
-	margin-bottom: 1rem;
-	line-height: 1.1;
+	margin-bottom: 0.8rem;
+	line-height: 1.25;
 }
 
 .brand-tagline {
 	color: #888;
-	font-size: 1.4rem;
-	margin-top: 1rem;
+	font-size: 1.2rem;
+	margin-top: 0.8rem;
 	font-weight: 500;
 	letter-spacing: 0.5px;
 }
@@ -78,7 +78,7 @@ body {
 .forms {
 	display: flex;
 	align-items: flex-start;
-	margin-top: 30px;
+	margin-top: 25px;
 }
 
 .form-wrapper {
@@ -116,7 +116,7 @@ body {
 	padding: 0;
 	text-transform: uppercase;
 	font-family: inherit;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 600;
 	letter-spacing: 1px;
 	color: #888;
@@ -130,13 +130,13 @@ body {
 .form-wrapper.is-active .switcher-login {
 	color: #4ec9ff;
 	transform: translateX(90px);
-	font-size: 22px;
+	font-size: 20px;
 }
 
 .form-wrapper.is-active .switcher-signup {
 	color: #4ec9ff;
 	transform: translateX(-90px);
-	font-size: 22px;
+	font-size: 20px;
 }
 
 .underline {
@@ -175,11 +175,11 @@ body {
 
 .form {
 	overflow: hidden;
-	min-width: 380px;
-	min-height: 500px;
-	margin-top: 50px;
-	padding: 70px 45px;
-	border-radius: 12px;
+	min-width: 340px;
+	min-height: 450px;
+	margin-top: 40px;
+	padding: 60px 35px;
+	border-radius: 10px;
 	transform-origin: top;
 	background: rgba(30, 30, 30, 0.95);
 	border: 1px solid rgba(78, 201, 255, 0.1);
@@ -293,13 +293,13 @@ body {
 }
 
 .input-block {
-	margin-bottom: 35px;
+	margin-bottom: 30px;
 }
 
 .input-block label {
 	display: block;
-	margin-bottom: 10px;
-	font-size: 17px;
+	margin-bottom: 8px;
+	font-size: 15px;
 	font-weight: 500;
 	letter-spacing: 0.5px;
 	color: #e0e0e0;
@@ -308,10 +308,10 @@ body {
 .input-block input {
 	display: block;
 	width: 100%;
-	margin-top: 6px;
-	padding: 8px 12px;
-	font-size: 14px;
-	line-height: 32px;
+	margin-top: 5px;
+	padding: 6px 10px;
+	font-size: 13px;
+	line-height: 28px;
 	color: #ffffff;
 	background: rgba(18, 18, 18, 0.6);
 	border: 1px solid rgba(78, 201, 255, 0.2);
@@ -329,11 +329,11 @@ body {
 .form [type='submit'] {
 	opacity: 0;
 	display: block;
-	min-width: 180px;
-	margin: 45px auto 10px;
-	font-size: 18px;
-	line-height: 48px;
-	border-radius: 30px;
+	min-width: 160px;
+	margin: 35px auto 8px;
+	font-size: 16px;
+	line-height: 44px;
+	border-radius: 25px;
 	border: none;
 	transition: all .3s ease-out;
 	cursor: pointer;
@@ -348,16 +348,17 @@ body {
 }
 
 .btn-login {
-	color: #fff;
-	background: #4ec9ff;
+	color: #4ec9ff;
+	background: rgba(30, 30, 30, 0.95);
+	box-shadow: inset 0 0 0 2px #4ec9ff;
 	transform: translateX(-30%);
 	padding: 0 30px;
 }
 
 .btn-login:hover {
-	background: #3bb8ee;
+	background: rgba(40, 40, 40, 0.95);
 	transform: translateY(-2px);
-	box-shadow: 0 5px 15px rgba(78, 201, 255, 0.3);
+	box-shadow: inset 0 0 0 2px #4ec9ff, 0 5px 15px rgba(78, 201, 255, 0.3);
 }
 
 .btn-signup {
@@ -408,8 +409,8 @@ body {
 	}
 	
 	.form {
-		min-width: 340px;
-		min-height: 450px;
-		padding: 50px 35px;
+		min-width: 300px;
+		min-height: 400px;
+		padding: 40px 30px;
 	}
 } 
