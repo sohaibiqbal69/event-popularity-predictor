@@ -9,7 +9,7 @@ const API_URL = 'http://localhost:8080';
 const EVENTS_API_URL = 'http://localhost:5000';
 
 // Define eventsPerPage as a constant outside the component
-const EVENTS_PER_PAGE = 20;
+const EVENTS_PER_PAGE = 9;
 
 // Define categories based on Ticketmaster's classification
 const CATEGORIES = [
