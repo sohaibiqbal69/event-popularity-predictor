@@ -21,6 +21,16 @@ function Login({ setIsAuthenticated }) {
 
     const navigate = useNavigate();
 
+    // Add login-page class to body when component mounts
+    useEffect(() => {
+        document.body.classList.add('login-page');
+        
+        // Remove class when component unmounts
+        return () => {
+            document.body.classList.remove('login-page');
+        };
+    }, []);
+
     const handleLoginChange = (e) => {
         const { name, value } = e.target;
         setLoginInfo(prev => ({

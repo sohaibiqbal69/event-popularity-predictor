@@ -4,7 +4,7 @@
 	box-sizing: border-box;
 }
 
-body {
+body.login-page {
 	margin: 0;
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	background: #121212;
@@ -19,8 +19,12 @@ body {
 	min-height: 100vh;
 	padding: 2rem;
 	background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.9));
-	position: relative;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
 	overflow: hidden;
+	z-index: 1000;
 }
 
 .forms-section::before {
