@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaHome, FaUser, FaSignOutAlt, FaHeart, FaInfoCircle } from 'react-icons/fa';
+import { FaHome, FaUser, FaSignOutAlt, FaHeart, FaInfoCircle, FaBars } from 'react-icons/fa';
 import axios from 'axios';
 import './Sidebar.css';
 
@@ -8,6 +8,7 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const isActive = (path) => {
     return location.pathname === path;
@@ -43,57 +44,103 @@ const Sidebar = () => {
     navigate('/login');
   };
 
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.classList.toggle('sidebar-collapsed', !isCollapsed);
+    }
+  };
+
+  const handleNavClick = () => {
+    if (!isCollapsed) {
+      setIsCollapsed(true);
+      const mainContent = document.querySelector('.main-content');
+      if (mainContent) {
+        mainContent.classList.add('sidebar-collapsed');
+      }
+    }
+  };
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const mainContent = document.querySelector('.main-content');
+      if (window.innerWidth <= 768) {
+        setIsCollapsed(true);
+        if (mainContent) {
+          mainContent.classList.add('sidebar-collapsed');
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Check initial size
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Handle initial state
+  useEffect(() => {
+    const mainContent = document.querySelector('.main-content');
+    if (window.innerWidth <= 768) {
+      setIsCollapsed(true);
+      if (mainContent) {
+        mainContent.classList.add('sidebar-collapsed');
+      }
+    }
+  }, []); // Run once on mount
+
   return (
-    <div className="sidebar">
-      <div className="sidebar-header">
-        <div className="logo-container">
-          <svg className="sidebar-logo" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="6" fill="#1a1a1a"/>
-            <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="#4ec9ff" fontSize="20" fontWeight="bold">
-              ES
-            </text>
-          </svg>
-        </div>
-        <h2>Event Sage</h2>
-      </div>
-      
-      <div className="sidebar-content">
-        <nav className="sidebar-nav">
-          <Link to="/home" className={`nav-item ${isActive('/home') ? 'active' : ''}`}>
-            <FaHome className="nav-icon" />
-            <span>Home</span>
-          </Link>
-          
-          <Link to="/favorites" className={`nav-item ${isActive('/favorites') ? 'active' : ''}`}>
-            <FaHeart className="nav-icon" />
-            <span>Favorites</span>
-          </Link>
-
-          <Link to="/about" className={`nav-item ${isActive('/about') ? 'active' : ''}`}>
-            <FaInfoCircle className="nav-icon" />
-            <span>About Us</span>
-          </Link>
-        </nav>
-
-        <div className="sidebar-footer">
-          <Link to="/profile" className={`nav-item ${isActive('/profile') ? 'active' : ''}`}>
-            {profileImage ? (
-              <div className="profile-image-container">
-                <img src={profileImage} alt="Profile" className="profile-image" />
-              </div>
-            ) : (
-              <FaUser className="nav-icon" />
-            )}
-            <span>Profile</span>
-          </Link>
-          
-          <button onClick={handleLogout} className="nav-item logout-button">
-            <FaSignOutAlt className="nav-icon" />
-            <span>Logout</span>
+    <>
+      <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
+        <div className="sidebar-header">
+          <button className="menu-toggle" onClick={toggleSidebar} aria-label="Toggle menu">
+            <FaBars />
           </button>
+          <h2>Event Sage</h2>
+        </div>
+        
+        <div className="sidebar-content">
+          <nav className="sidebar-nav">
+            <Link to="/home" className={`nav-item ${isActive('/home') ? 'active' : ''}`} onClick={handleNavClick}>
+              <FaHome className="nav-icon" />
+              <span>Home</span>
+            </Link>
+            
+            <Link to="/favorites" className={`nav-item ${isActive('/favorites') ? 'active' : ''}`} onClick={handleNavClick}>
+              <FaHeart className="nav-icon" />
+              <span>Favorites</span>
+            </Link>
+
+            <Link to="/about" className={`nav-item ${isActive('/about') ? 'active' : ''}`} onClick={handleNavClick}>
+              <FaInfoCircle className="nav-icon" />
+              <span>About Us</span>
+            </Link>
+          </nav>
+
+          <div className="sidebar-footer">
+            <Link to="/profile" className={`nav-item ${isActive('/profile') ? 'active' : ''}`} onClick={handleNavClick}>
+              {profileImage ? (
+                <div className="profile-image-container">
+                  <img src={profileImage} alt="Profile" className="profile-image" />
+                </div>
+              ) : (
+                <FaUser className="nav-icon" />
+              )}
+              <span>Profile</span>
+            </Link>
+            
+            <button onClick={handleLogout} className="nav-item logout-button">
+              <FaSignOutAlt className="nav-icon" />
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
