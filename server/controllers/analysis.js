@@ -42,7 +42,6 @@ const predictTrend = (eventName) => {
     // In a real application, you would use machine learning or statistical analysis
     const mockTrend = {
         direction: Math.random() > 0.5 ? 'up' : 'down',
-        confidence: Math.random() * 100,
         factors: ['social media buzz', 'ticket sales velocity', 'similar events performance']
     };
 

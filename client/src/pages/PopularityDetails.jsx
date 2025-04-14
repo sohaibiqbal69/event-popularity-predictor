@@ -35,6 +35,30 @@ const PopularityDetails = () => {
   const [error, setError] = useState(null);
   const [noDataAvailable, setNoDataAvailable] = useState(false);
 
+  // Function to get cached popularity data
+  const getCachedPopularityData = (eventId) => {
+    const cacheKey = `popularity_data_${eventId}`;
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      try {
+        return JSON.parse(cached);
+      } catch (e) {
+        console.error('Error parsing cached popularity data:', e);
+      }
+    }
+    return null;
+  };
+
+  // Function to cache popularity data
+  const cachePopularityData = (eventId, data) => {
+    const cacheKey = `popularity_data_${eventId}`;
+    try {
+      sessionStorage.setItem(cacheKey, JSON.stringify(data));
+    } catch (e) {
+      console.error('Error caching popularity data:', e);
+    }
+  };
+
   const fetchEventDetails = useCallback(async () => {
     if (!id) {
       setError('No event ID provided');
@@ -47,14 +71,28 @@ const PopularityDetails = () => {
       setError(null);
       setNoDataAvailable(false);
       
+      // Check cache first for popularity data
+      const cachedPopularityData = getCachedPopularityData(id);
+      
       // Fetch event details
       const response = await axios.get(`http://localhost:8080/api/events/${id}`);
       const event = response.data;
       
       try {
-        // Try to fetch popularity data
-        const popularityResponse = await axios.get(`http://localhost:8080/api/predictions/${id}`);
-        const popularityData = popularityResponse.data;
+        let popularityData;
+        
+        // Use cached data if available
+        if (cachedPopularityData) {
+          popularityData = cachedPopularityData;
+          console.log('Using cached popularity data');
+        } else {
+          // Try to fetch popularity data
+          const popularityResponse = await axios.get(`http://localhost:8080/api/predictions/${id}`);
+          popularityData = popularityResponse.data;
+          
+          // Cache the popularity data
+          cachePopularityData(id, popularityData);
+        }
         
         // Combine event and popularity data
         setEventData({
@@ -65,7 +103,6 @@ const PopularityDetails = () => {
           },
           trend: {
             direction: popularityData.trend_score > 0 ? 'up' : 'down',
-            confidence: Math.max(20, Math.min(100, Math.abs(popularityData.trend_score * 50))),
             pastPopularity: Math.max(0, Math.min(100, 50 + (popularityData.sentiment_score * 10))),
             currentPopularity: Math.max(0, Math.min(100, 50 + (popularityData.sentiment_score * 15) + (Math.min(popularityData.social_volume, 100) * 0.2))),
             predictedPopularity: Math.max(0, Math.min(100, 50 + (popularityData.sentiment_score * 20) + (Math.min(popularityData.social_volume, 100) * 0.3)))
@@ -302,7 +339,6 @@ const PopularityDetails = () => {
                   <div className={`trend ${eventData.trend.direction}`}>
                     {eventData.trend.direction === 'up' ? '↑' : '↓'} {eventData.trend.direction === 'up' ? 'Increasing' : 'Decreasing'}
                   </div>
-                  <p className="confidence">Confidence: {eventData.trend.confidence.toFixed(1)}%</p>
                 </div>
               </div>
             </div>
@@ -389,7 +425,6 @@ const PopularityDetails = () => {
                 <li>UP: Increasing popularity and engagement</li>
                 <li>DOWN: Decreasing popularity and engagement</li>
               </ul>
-              <p>The confidence percentage shows how certain our model is about this prediction.</p>
             </div>
 
             <div className="explanation-card">

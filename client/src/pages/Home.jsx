@@ -58,43 +58,10 @@ const Home = () => {
     }
   };
 
-  const getCachedEvents = (page, search, category) => {
-    const cacheKey = `events_page_${page}_${search}_${category}`;
-    const cached = sessionStorage.getItem(cacheKey);
-    if (cached) {
-      try {
-        const { data } = JSON.parse(cached);
-        return data;
-      } catch (e) {
-        console.error('Error parsing cached events:', e);
-      }
-    }
-    return null;
-  };
-
-  const cacheEvents = (page, search, category, events) => {
-    const cacheKey = `events_page_${page}_${search}_${category}`;
-    try {
-      sessionStorage.setItem(cacheKey, JSON.stringify({
-        data: events
-      }));
-    } catch (e) {
-      console.error('Error caching events:', e);
-    }
-  };
-
   const fetchEvents = async (page, search = '', category = 'all') => {
     let mounted = true;
     try {
       setLoading(true);
-      
-      // Check cache first
-      const cachedEvents = getCachedEvents(page, search, category);
-      if (cachedEvents) {
-        setEvents(cachedEvents);
-        setLoading(false);
-        return;
-      }
 
       const params = new URLSearchParams({
         size: EVENTS_PER_PAGE,
@@ -116,10 +83,8 @@ const Home = () => {
       if (mounted) {
         if (response.data.events && Array.isArray(response.data.events)) {
           setEvents(response.data.events);
-          cacheEvents(page, search, category, response.data.events);
         } else if (Array.isArray(response.data)) {
           setEvents(response.data);
-          cacheEvents(page, search, category, response.data);
         } else {
           console.error('Unexpected API response structure:', response.data);
           setEvents([]);
