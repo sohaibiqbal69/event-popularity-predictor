@@ -8,18 +8,28 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(null);
-  const [isCollapsed, setIsCollapsed] = useState(() => {
-    const savedState = localStorage.getItem('sidebarCollapsed');
-    return savedState ? JSON.parse(savedState) : false;
-  });
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const isActive = (path) => {
     return location.pathname === path;
   };
 
   useEffect(() => {
-    localStorage.setItem('sidebarCollapsed', JSON.stringify(isCollapsed));
+    // Only save to localStorage when user manually toggles
+    if (localStorage.getItem('sidebarCollapsed') !== null) {
+      localStorage.setItem('sidebarCollapsed', JSON.stringify(isCollapsed));
+    }
   }, [isCollapsed]);
+
+  // Force collapsed state on mount
+  useEffect(() => {
+    setIsCollapsed(true);
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.style.marginLeft = '80px';
+      mainContent.classList.add('sidebar-collapsed');
+    }
+  }, []); // Run once on mount
 
   useEffect(() => {
     const fetchProfileImage = async () => {
@@ -92,9 +102,9 @@ const Sidebar = () => {
   // Handle initial state
   useEffect(() => {
     const mainContent = document.querySelector('.main-content');
-    if (window.innerWidth <= 768) {
-      setIsCollapsed(true);
+    if (window.innerWidth <= 768 || isCollapsed) {
       if (mainContent) {
+        mainContent.style.marginLeft = '80px';
         mainContent.classList.add('sidebar-collapsed');
       }
     }
