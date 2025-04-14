@@ -8,11 +8,18 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(null);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    const savedState = localStorage.getItem('sidebarCollapsed');
+    return savedState ? JSON.parse(savedState) : false;
+  });
 
   const isActive = (path) => {
     return location.pathname === path;
   };
+
+  useEffect(() => {
+    localStorage.setItem('sidebarCollapsed', JSON.stringify(isCollapsed));
+  }, [isCollapsed]);
 
   useEffect(() => {
     const fetchProfileImage = async () => {
@@ -48,7 +55,7 @@ const Sidebar = () => {
     setIsCollapsed(!isCollapsed);
     const mainContent = document.querySelector('.main-content');
     if (mainContent) {
-      mainContent.classList.toggle('sidebar-collapsed', !isCollapsed);
+      mainContent.style.marginLeft = !isCollapsed ? '80px' : '250px';
     }
   };
 
