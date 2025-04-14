@@ -142,33 +142,18 @@ def trending_events():
         processed_events = []
         for event in events_data.get('events', []):
             try:
-                event_name = event.get("name", "Unknown Event")
-                # Only fetch Reddit data for events on the current page
-                reddit_data = reddit_api.fetch_reddit_posts(event_name, limit=50)
-                
-                sentiment_score = 0
-                if reddit_data:
-                    reddit_texts = [f"{post.get('title', '')} {post.get('selftext', '')}" for post in reddit_data]
-                    sentiment_score = sentiment_analysis.analyze_sentiment(reddit_texts)
-
                 event_data = {
                     "id": event.get("id"),
-                    "name": event_name,
-                    "sentiment_score": sentiment_score,
-                    "trend_score": calculate_trending_score({
-                        "sentiment_score": sentiment_score,
-                        "social_volume": len(reddit_data)
-                    }),
-                    "social_volume": len(reddit_data),
+                    "name": event.get("name", "Unknown Event"),
                     "image": event.get("images", [{}])[0].get("url") if event.get("images") else None,
                     "date": event.get("dates", {}).get("start", {}).get("localDate"),
                     "location": event.get("_embedded", {}).get("venues", [{}])[0].get("name") if event.get("_embedded", {}).get("venues") else None,
                     "category": event.get("classifications", [{}])[0].get("segment", {}).get("name", "Uncategorized")
                 }
                 processed_events.append(event_data)
-                logger.debug(f"Processed event: {event_name}")
+                logger.debug(f"Processed event: {event_data['name']}")
             except Exception as e:
-                logger.error(f"Error processing event {event_name}: {str(e)}")
+                logger.error(f"Error processing event: {str(e)}")
                 continue
 
         return jsonify({
