@@ -6,10 +6,10 @@ require('dotenv').config();
 // Get user profile
 const getProfile = async (req, res) => {
     try {
-        // The user ID is available from the auth middleware
+        
         const userId = req.user._id;
         
-        // Find the user but exclude the password
+        
         const user = await UserModel.findById(userId).select('-password');
         
         if (!user) {
@@ -52,7 +52,7 @@ const updateProfile = async (req, res) => {
         if (name) user.name = name;
         if (email) user.email = email;
         
-        // Handle password change if provided
+        
         if (currentPassword && newPassword) {
             // Verify current password
             const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
@@ -70,8 +70,7 @@ const updateProfile = async (req, res) => {
         
         // Handle profile image if provided
         if (req.file) {
-            // Assuming you have a field for profile image URL in your user model
-            // If not, you'll need to add it to the User model
+            // add it to the User model
             user.profileImage = req.file.path;
         }
         

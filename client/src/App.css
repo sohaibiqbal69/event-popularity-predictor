@@ -21,11 +21,13 @@
 }
 
 .main-content > * {
-  width: min(1200px, 100%);
+  width: 100%;
   box-sizing: border-box;
 }
 
 .main-content.no-sidebar {
+  margin-left: 0;
+  padding: 0;
   width: 100%;
 }
 
@@ -34,16 +36,25 @@
   .main-content {
     padding: 20px;
   }
+  .main-content.no-sidebar {
+    padding: 0;
+  }
 }
 
 @media (max-width: 768px) {
   .main-content {
     padding: 16px;
   }
+  .main-content.no-sidebar {
+    padding: 0;
+  }
 }
 
 @media (max-width: 480px) {
   .main-content {
     padding: 12px;
+  }
+  .main-content.no-sidebar {
+    padding: 0;
   }
 }

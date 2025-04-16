@@ -1,8 +1,8 @@
 const axios = require('axios');
-const { analyzeSentiment } = require('./analysis'); // Use the VADER sentiment analysis module
 
 const TICKETMASTER_API_KEY = process.env.TICKETMASTER_API_KEY;
 const TICKETMASTER_API_ENDPOINT = 'https://app.ticketmaster.com/discovery/v2/events';
+const FLASK_API_URL = process.env.FLASK_API_URL || 'http://localhost:5000';
 
 // Simple in-memory rate limiter
 const rateLimiter = {
@@ -25,7 +25,6 @@ const getAllEvents = async (req, res) => {
     try {
         const { category, page, size } = req.query;
         
-        // Wait for rate limit before making request
         await rateLimiter.waitForRateLimit();
         
         const params = {
@@ -39,18 +38,34 @@ const getAllEvents = async (req, res) => {
         const response = await axios.get(TICKETMASTER_API_ENDPOINT, { params });
         const events = response.data._embedded?.events || [];
 
-        // Process events with sentiment analysis
+        // Process events with sentiment analysis from Flask API
         const processedEvents = await Promise.all(events.map(async event => {
-            const sentiment = await analyzeSentiment(event.name);
-            return {
-                id: event.id,
-                name: event.name,
-                date: event.dates.start.localDate,
-                image: event.images?.[0]?.url,
-                sentiment_score: sentiment.score,
-                social_volume: sentiment.volume,
-                location: event._embedded?.venues?.[0]?.name
-            };
+            try {
+                const sentimentResponse = await axios.get(
+                    `${FLASK_API_URL}/api/event-sentiment/${encodeURIComponent(event.name)}`
+                );
+                const sentimentData = sentimentResponse.data;
+
+                return {
+                    id: event.id,
+                    name: event.name,
+                    date: event.dates.start.localDate,
+                    image: event.images?.[0]?.url,
+                    sentiment_score: sentimentData.sentiment_score,
+                    social_volume: sentimentData.social_volume,
+                    location: event._embedded?.venues?.[0]?.name
+                };
+            } catch (error) {
+                console.error(`Error fetching sentiment for ${event.name}:`, error);
+                // Return event without sentiment data if the Flask API call fails
+                return {
+                    id: event.id,
+                    name: event.name,
+                    date: event.dates.start.localDate,
+                    image: event.images?.[0]?.url,
+                    location: event._embedded?.venues?.[0]?.name
+                };
+            }
         }));
 
         res.json({

@@ -9,9 +9,9 @@ const path = require('path');
 // Route imports
 const AuthRouter = require('./routes/AuthRouter');
 const EventRouter = require('./routes/EventRouter');
-const PredictionRouter = require('./routes/PredictionRouter'); // New prediction routes
-const FavoriteRouter = require('./routes/FavoriteRouter'); // New favorites routes
-const UserRouter = require('./routes/UserRouter'); // New user routes
+const PredictionRouter = require('./routes/PredictionRouter'); // prediction routes
+const FavoriteRouter = require('./routes/FavoriteRouter'); // favorites routes
+const UserRouter = require('./routes/UserRouter'); // user routes
 
 // Database connection
 require('./models/db');
@@ -33,7 +33,7 @@ if (!fs.existsSync(profilesDir)) {
 // Middleware
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // Your React app's URL
+  origin: 'http://localhost:5173', // react  app's URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
@@ -75,11 +75,11 @@ const server = app.listen(PORT, () => {
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
     console.error('Uncaught Exception:', err);
-    // Don't exit the process, just log the error
+    // don't exit the process, just log the error
 });
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-    // Don't exit the process, just log the error
+    // don't exit the process, just log the error
 });
